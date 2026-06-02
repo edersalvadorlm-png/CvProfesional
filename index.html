@@ -1,78 +1,193 @@
 
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Barbería</title>
+<title>Barber Premium</title>
 <style>
-body{margin:0;font-family:Arial;background:black;color:white;text-align:center}
-h1{color:red;margin-top:20px}
-.container{padding:20px}
-button{padding:10px 15px;margin:5px;border:none;border-radius:8px;cursor:pointer}
-.day{background:#0b3d91;color:white}
-.hour{background:#b30000;color:white}
-input,select{padding:10px;margin:5px;width:80%;background:#222;color:white;border:none;border-radius:5px}
-.whatsapp{background:green;color:white}
+body{
+  margin:0;
+  background:#0a0a0a;
+  font-family:Arial;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  color:white;
+}
+
+.phone{
+  width:360px;
+  height:650px;
+  background:#111;
+  border-radius:30px;
+  padding:20px;
+  box-shadow:0 0 30px rgba(0,0,0,0.6);
+}
+
+.header h2{margin:0}
+.header p{color:#888;margin:5px 0}
+
+.filters{
+  display:flex;
+  gap:10px;
+  margin:15px 0;
+}
+
+.filter{
+  padding:8px 15px;
+  border-radius:20px;
+  border:1px solid #333;
+  cursor:pointer;
+}
+
+.active{
+  background:#00ff99;
+  color:black;
+}
+
+.card{
+  background:#1a1a1a;
+  border-radius:20px;
+  overflow:hidden;
+  margin-bottom:15px;
+}
+
+.card img{
+  width:100%;
+}
+
+.card .info{
+  padding:10px;
+}
+
+.times{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:10px;
+}
+
+.time{
+  background:#222;
+  padding:6px 10px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.time:hover{
+  background:#ff3333;
+}
+
+.form{
+  display:none;
+  margin-top:10px;
+}
+
+input,select{
+  width:100%;
+  margin:5px 0;
+  padding:8px;
+  border-radius:6px;
+  border:none;
+  background:#222;
+  color:white;
+}
+
+.btn{
+  background:green;
+  border:none;
+  padding:10px;
+  width:100%;
+  margin-top:10px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.nav{
+  position:absolute;
+  bottom:20px;
+  left:0;
+  width:100%;
+  display:flex;
+  justify-content:space-around;
+}
+
+.nav div{
+  width:40px;
+  height:40px;
+  border-radius:10px;
+  background:#222;
+}
+
 </style>
 </head>
 <body>
-<h1>AGENDA TU CITA</h1>
-<div id="days" class="container"></div>
-<div id="hours" class="container"></div>
-<div id="form" class="container" style="display:none">
-  <input id="nombre" placeholder="Nombre"><br>
-  <input id="telefono" placeholder="Teléfono"><br>
-  <select id="servicio">
-    <option>Corte</option>
-    <option>Barba</option>
-    <option>Corte + Barba</option>
-  </select><br>
-  <button class="whatsapp" onclick="confirmar()">Confirmar por WhatsApp</button>
+
+<div class="phone">
+  <div class="header">
+    <h2>Agenda Barber</h2>
+    <p>Selecciona servicio</p>
+  </div>
+
+  <div class="filters">
+    <div class="filter active">All</div>
+    <div class="filter">Hair</div>
+    <div class="filter">Beard</div>
+  </div>
+
+  <div class="card">
+    https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f
+    <div class="info">
+      <h3>Servicio Barber</h3>
+      <p>Corte profesional</p>
+
+      <div class="times" id="times"></div>
+
+      <div class="form" id="form">
+        <input id="nombre" placeholder="Nombre">
+        <input id="telefono" placeholder="Teléfono">
+        <select id="servicio">
+          <option>Corte</option>
+          <option>Barba</option>
+          <option>Corte + Barba</option>
+        </select>
+        <button class="btn" onclick="enviar()">Confirmar</button>
+      </div>
+
+    </div>
+  </div>
 </div>
+
 <script>
-const days=["Lunes","Martes","Miércoles","Jueves","Viernes"];
-const hours=[11,12,13,14,15,16,17,18,19];
-let selectedDay=null;
-let selectedHour=null;
-const daysDiv=document.getElementById("days");
-const hoursDiv=document.getElementById("hours");
-// mostrar dias
- days.forEach(d=>{
-   const btn=document.createElement("button");
-   btn.innerText=d;
-   btn.className="day";
-   btn.onclick=()=>selectDay(d);
-   daysDiv.appendChild(btn);
- });
-function selectDay(day){
-  selectedDay=day;
-  hoursDiv.innerHTML="<h3>Horas disponibles</h3>";
-  hours.forEach(h=>{
-    const btn=document.createElement("button");
-    btn.innerText=`${h}:00 - ${h+1}:00`;
-    btn.className="hour";
-    btn.onclick=()=>selectHour(h);
-    hoursDiv.appendChild(btn);
-  });
-}
-function selectHour(hour){
-  selectedHour=hour;
-  document.getElementById("form").style.display="block";
-}
-function confirmar(){
-  const nombre=document.getElementById("nombre").value;
-  const telefono=document.getElementById("telefono").value;
-  const servicio=document.getElementById("servicio").value;
-  const msg=`Hola quiero agendar cita:%0ADía: ${selectedDay}%0AHora: ${selectedHour}:00%0AServicio: ${servicio}%0ANombre: ${nombre}`;
-  const numeroBarberia="5218112345678"; // ⚠️ CAMBIA ESTE NUMERO POR EL TUYO (FORMATO: 521 + lada + número)
-  const url=`https://wa.me/${numeroBarberia}?text=${msg}`;
-  window.open(url,"_blank");
+const timesDiv = document.getElementById("times");
+const form = document.getElementById("form");
+const hours = [11,12,13,14,15,16,17,18,19];
+let selectedHour = null;
+
+hours.forEach(h=>{
+  const div = document.createElement("div");
+  div.className = "time";
+  div.innerText = `${h}:00`;
+  div.onclick = ()=>{
+    selectedHour = h;
+    form.style.display = "block";
+  };
+  timesDiv.appendChild(div);
+});
+
+function enviar(){
+  const nombre = document.getElementById("nombre").value;
+  const telefono = document.getElementById("telefono").value;
+  const servicio = document.getElementById("servicio").value;
+
+  const msg = `Cita Barber%0AHora: ${selectedHour}:00%0ANombre: ${nombre}%0AServicio: ${servicio}`;
+  const numero = "5218112345678"; // CAMBIA TU NUMERO
+  window.open(`https://wa.me/${numero}?text=${msg}`);
 }
 </script>
 
 </body>
 </html>
-
-
-    
