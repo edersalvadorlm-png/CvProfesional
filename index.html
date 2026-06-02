@@ -1,79 +1,78 @@
 
-
-import { useState } from "react";
-
-const hours = Array.from({ length: 9 }, (_, i) => 11 + i); // 11 a 19
-const days = ["Lunes","Martes","Miércoles","Jueves","Viernes"];
-
-export default function BarberApp() {
-  const [selectedDay, setSelectedDay] = useState(null);
-  const [selectedHour, setSelectedHour] = useState(null);
-  const [form, setForm] = useState({ nombre:"", telefono:"", servicio:"Corte" });
-
-  const handleConfirm = () => {
-    const msg = `Hola, quiero agendar cita:%0A📅 Día: ${selectedDay}%0A⏰ Hora: ${selectedHour}:00%0A💇 Servicio: ${form.servicio}%0A👤 Nombre: ${form.nombre}%0A📱 Tel: ${form.telefono}`;
-    const url = `https://wa.me/${form.telefono}?text=${msg}`;
-    window.open(url, "_blank");
-  };
-
-  return (
-    <div className="min-h-screen bg-black text-white p-6 flex flex-col items-center">
-
-      <h1 className="text-3xl font-bold text-red-500 mb-4">AGENDA TU CITA</h1>
-
-      {!selectedDay && (
-        <div className="grid grid-cols-2 gap-4">
-          {days.map(d => (
-            <button key={d}
-              onClick={() => setSelectedDay(d)}
-              className="bg-blue-800 p-4 rounded-xl hover:bg-blue-600">
-              {d}
-            </button>
-          ))}
-        </div>
-      )}
-
-      {selectedDay && !selectedHour && (
-        <div className="mt-6 text-center">
-          <h2 className="mb-4 text-xl">Horas disponibles ({selectedDay})</h2>
-          <div className="grid grid-cols-3 gap-3">
-            {hours.map(h => (
-              <button key={h}
-                onClick={() => setSelectedHour(h)}
-                className="bg-red-700 p-3 rounded hover:bg-red-500">
-                {h}:00 - {h+1}:00
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {selectedDay && selectedHour && (
-        <div className="mt-6 w-full max-w-sm flex flex-col gap-3">
-          <h2 className="text-center text-xl">Datos de cita</h2>
-
-          <input placeholder="Nombre"
-            className="p-2 rounded bg-gray-800"
-            onChange={e => setForm({...form, nombre:e.target.value})} />
-
-          <input placeholder="Teléfono"
-            className="p-2 rounded bg-gray-800"
-            onChange={e => setForm({...form, telefono:e.target.value})} />
-
-          <select className="p-2 rounded bg-gray-800"
-            onChange={e => setForm({...form, servicio:e.target.value})}>
-            <option>Corte</option>
-            <option>Barba</option>
-            <option>Corte + Barba</option>
-          </select>
-
-          <button onClick={handleConfirm}
-            className="bg-green-600 p-3 rounded hover:bg-green-500">
-            Confirmar por WhatsApp
-          </button>
-        </div>
-      )}
-
-    </div>
-  );
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barbería</title>
+<style>
+body{margin:0;font-family:Arial;background:black;color:white;text-align:center}
+h1{color:red;margin-top:20px}
+.container{padding:20px}
+button{padding:10px 15px;margin:5px;border:none;border-radius:8px;cursor:pointer}
+.day{background:#0b3d91;color:white}
+.hour{background:#b30000;color:white}
+input,select{padding:10px;margin:5px;width:80%;background:#222;color:white;border:none;border-radius:5px}
+.whatsapp{background:green;color:white}
+</style>
+</head>
+<body>
+<h1>AGENDA TU CITA</h1>
+<div id="days" class="container"></div>
+<div id="hours" class="container"></div>
+<div id="form" class="container" style="display:none">
+  <input id="nombre" placeholder="Nombre"><br>
+  <input id="telefono" placeholder="Teléfono"><br>
+  <select id="servicio">
+    <option>Corte</option>
+    <option>Barba</option>
+    <option>Corte + Barba</option>
+  </select><br>
+  <button class="whatsapp" onclick="confirmar()">Confirmar por WhatsApp</button>
+</div>
+<script>
+const days=["Lunes","Martes","Miércoles","Jueves","Viernes"];
+const hours=[11,12,13,14,15,16,17,18,19];
+let selectedDay=null;
+let selectedHour=null;
+const daysDiv=document.getElementById("days");
+const hoursDiv=document.getElementById("hours");
+// mostrar dias
+ days.forEach(d=>{
+   const btn=document.createElement("button");
+   btn.innerText=d;
+   btn.className="day";
+   btn.onclick=()=>selectDay(d);
+   daysDiv.appendChild(btn);
+ });
+function selectDay(day){
+  selectedDay=day;
+  hoursDiv.innerHTML="<h3>Horas disponibles</h3>";
+  hours.forEach(h=>{
+    const btn=document.createElement("button");
+    btn.innerText=`${h}:00 - ${h+1}:00`;
+    btn.className="hour";
+    btn.onclick=()=>selectHour(h);
+    hoursDiv.appendChild(btn);
+  });
 }
+function selectHour(hour){
+  selectedHour=hour;
+  document.getElementById("form").style.display="block";
+}
+function confirmar(){
+  const nombre=document.getElementById("nombre").value;
+  const telefono=document.getElementById("telefono").value;
+  const servicio=document.getElementById("servicio").value;
+  const msg=`Hola quiero agendar cita:%0ADía: ${selectedDay}%0AHora: ${selectedHour}:00%0AServicio: ${servicio}%0ANombre: ${nombre}`;
+  const numeroBarberia="5218112345678"; // ⚠️ CAMBIA ESTE NUMERO POR EL TUYO (FORMATO: 521 + lada + número)
+  const url=`https://wa.me/${numeroBarberia}?text=${msg}`;
+  window.open(url,"_blank");
+}
+</script>
+
+</body>
+</html>
+
+
+    
