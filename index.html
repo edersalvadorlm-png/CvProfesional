@@ -1,193 +1,166 @@
 
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Barber Premium</title>
+<title>Barber Pro Firebase</title>
 <style>
-body{
-  margin:0;
-  background:#0a0a0a;
-  font-family:Arial;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-  color:white;
-}
-
-.phone{
-  width:360px;
-  height:650px;
-  background:#111;
-  border-radius:30px;
-  padding:20px;
-  box-shadow:0 0 30px rgba(0,0,0,0.6);
-}
-
-.header h2{margin:0}
-.header p{color:#888;margin:5px 0}
-
-.filters{
-  display:flex;
-  gap:10px;
-  margin:15px 0;
-}
-
-.filter{
-  padding:8px 15px;
-  border-radius:20px;
-  border:1px solid #333;
-  cursor:pointer;
-}
-
-.active{
-  background:#00ff99;
-  color:black;
-}
-
-.card{
-  background:#1a1a1a;
-  border-radius:20px;
-  overflow:hidden;
-  margin-bottom:15px;
-}
-
-.card img{
-  width:100%;
-}
-
-.card .info{
-  padding:10px;
-}
-
-.times{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin-top:10px;
-}
-
-.time{
-  background:#222;
-  padding:6px 10px;
-  border-radius:8px;
-  cursor:pointer;
-}
-
-.time:hover{
-  background:#ff3333;
-}
-
-.form{
-  display:none;
-  margin-top:10px;
-}
-
-input,select{
-  width:100%;
-  margin:5px 0;
-  padding:8px;
-  border-radius:6px;
-  border:none;
-  background:#222;
-  color:white;
-}
-
-.btn{
-  background:green;
-  border:none;
-  padding:10px;
-  width:100%;
-  margin-top:10px;
-  border-radius:8px;
-  cursor:pointer;
-}
-
-.nav{
-  position:absolute;
-  bottom:20px;
-  left:0;
-  width:100%;
-  display:flex;
-  justify-content:space-around;
-}
-
-.nav div{
-  width:40px;
-  height:40px;
-  border-radius:10px;
-  background:#222;
-}
-
+body{margin:0;background:#0b0b0b;color:white;font-family:Arial;display:flex;justify-content:center;padding:20px}
+.app{width:380px;background:#111;border-radius:25px;padding:20px;box-shadow:0 0 30px #000}
+.header{display:flex;align-items:center;gap:10px}
+.header img{width:50px;height:50px;border-radius:50%}
+h2{margin:0}
+p{color:#aaa;margin:5px 0 15px}
+.days{display:flex;flex-wrap:wrap;gap:8px}
+.day{padding:8px 12px;border-radius:15px;background:#222;cursor:pointer}
+.day.active{background:#f5b400;color:black}
+.times{margin-top:15px;display:flex;flex-wrap:wrap;gap:8px}
+.time{padding:8px;border-radius:10px;background:#222;cursor:pointer}
+.time.disabled{background:#444;color:#888;pointer-events:none}
+.time.active{background:#ff3b3b}
+.form{display:none;margin-top:15px}
+input,select{width:100%;margin:5px 0;padding:10px;border-radius:8px;border:none;background:#222;color:white}
+button{width:100%;padding:12px;margin-top:10px;border:none;border-radius:10px;background:#1db954;color:white;cursor:pointer}
+.admin{margin-top:20px;background:#000;padding:10px;border-radius:10px}
 </style>
+
+<!-- Firebase -->
+https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js"></script>
+
 </head>
 <body>
+<div class="app">
 
-<div class="phone">
   <div class="header">
-    <h2>Agenda Barber</h2>
-    <p>Selecciona servicio</p>
-  </div>
-
-  <div class="filters">
-    <div class="filter active">All</div>
-    <div class="filter">Hair</div>
-    <div class="filter">Beard</div>
-  </div>
-
-  <div class="card">
-    https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f
-    <div class="info">
-      <h3>Servicio Barber</h3>
-      <p>Corte profesional</p>
-
-      <div class="times" id="times"></div>
-
-      <div class="form" id="form">
-        <input id="nombre" placeholder="Nombre">
-        <input id="telefono" placeholder="Teléfono">
-        <select id="servicio">
-          <option>Corte</option>
-          <option>Barba</option>
-          <option>Corte + Barba</option>
-        </select>
-        <button class="btn" onclick="enviar()">Confirmar</button>
-      </div>
-
+    <img src="https://i.imgur.com/6VBx3io.png">
+    <div>
+      <h2>Barber Shop</h2>
+      <p>Agenda tu cita</p>
     </div>
   </div>
+
+  <div id="days" class="days"></div>
+  <div id="times" class="times"></div>
+
+  <div class="form" id="form">
+    <input id="nombre" placeholder="Nombre">
+    <input id="telefono" placeholder="Teléfono">
+    <select id="servicio">
+      <option>Corte</option>
+      <option>Barba</option>
+      <option>Corte + Barba</option>
+    </select>
+    <button onclick="confirmar()">Confirmar Cita</button>
+  </div>
+
+  <div class="admin">
+    <h3>Panel Admin</h3>
+    <div id="listaCitas"></div>
+  </div>
+
 </div>
 
 <script>
-const timesDiv = document.getElementById("times");
-const form = document.getElementById("form");
-const hours = [11,12,13,14,15,16,17,18,19];
-let selectedHour = null;
+// CONFIGURACION FIREBASE (REEMPLAZA)
+const firebaseConfig = {
+  apiKey: "TU_API_KEY",
+  authDomain: "TU_PROYECTO.firebaseapp.com",
+  databaseURL: "https://TU_PROYECTO.firebaseio.com",
+  projectId: "TU_PROYECTO",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: ""
+};
 
-hours.forEach(h=>{
-  const div = document.createElement("div");
-  div.className = "time";
-  div.innerText = `${h}:00`;
-  div.onclick = ()=>{
-    selectedHour = h;
-    form.style.display = "block";
-  };
-  timesDiv.appendChild(div);
-});
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
 
-function enviar(){
-  const nombre = document.getElementById("nombre").value;
-  const telefono = document.getElementById("telefono").value;
-  const servicio = document.getElementById("servicio").value;
+const daysNames=["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes"];
+const today=new Date().getDay();
+const hours=[11,12,13,14,15,16,17,18,19,20,21];
 
-  const msg = `Cita Barber%0AHora: ${selectedHour}:00%0ANombre: ${nombre}%0AServicio: ${servicio}`;
-  const numero = "5218112345678"; // CAMBIA TU NUMERO
+let selectedDay=null, selectedHour=null;
+
+const daysDiv=document.getElementById("days");
+const timesDiv=document.getElementById("times");
+const lista=document.getElementById("listaCitas");
+
+// Mostrar días
+for(let i=today;i<=5;i++){
+  const btn=document.createElement("div");
+  const name=daysNames[i];
+  if(!name) continue;
+  btn.innerText=name;
+  btn.className="day";
+  btn.onclick=()=>selectDay(name,btn);
+  daysDiv.appendChild(btn);
+}
+
+function selectDay(day,el){
+  selectedDay=day;
+  document.querySelectorAll(".day").forEach(d=>d.classList.remove("active"));
+  el.classList.add("active");
+
+  db.ref("citas/"+day).on("value",snapshot=>{
+    const booked=snapshot.val()||{};
+    renderHours(booked);
+  });
+}
+
+function renderHours(booked){
+  timesDiv.innerHTML="";
+  hours.forEach(h=>{
+    const t=document.createElement("div");
+    t.innerText=`${h}:00 - ${h+1}:00`;
+    t.className="time";
+
+    if(booked[h]){
+      t.classList.add("disabled");
+    }else{
+      t.onclick=()=>selectHour(h,t);
+    }
+
+    timesDiv.appendChild(t);
+  });
+}
+
+function selectHour(hour,el){
+  selectedHour=hour;
+  document.querySelectorAll(".time").forEach(t=>t.classList.remove("active"));
+  el.classList.add("active");
+  document.getElementById("form").style.display="block";
+}
+
+function confirmar(){
+  const nombre=document.getElementById("nombre").value;
+  const telefono=document.getElementById("telefono").value;
+  const servicio=document.getElementById("servicio").value;
+
+  if(!nombre||!telefono) return alert("Completa los datos");
+
+  db.ref("citas/"+selectedDay+"/"+selectedHour).set({nombre,telefono,servicio});
+
+  const msg=`Cita Barber%0ADía: ${selectedDay}%0AHora: ${selectedHour}:00%0ANombre: ${nombre}`;
+  const numero="5218112345678";
   window.open(`https://wa.me/${numero}?text=${msg}`);
 }
+
+// PANEL ADMIN
+db.ref("citas").on("value",snap=>{
+  const data=snap.val()||{};
+  lista.innerHTML="";
+  Object.keys(data).forEach(day=>{
+    Object.keys(data[day]).forEach(h=>{
+      const c=data[day][h];
+      lista.innerHTML+=`<p>${day} ${h}:00 - ${c.nombre}</p>`;
+    });
+  });
+});
 </script>
 
 </body>
 </html>
+
+
