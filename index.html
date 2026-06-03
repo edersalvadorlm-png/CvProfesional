@@ -1,166 +1,444 @@
-
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Barber Pro Firebase</title>
+
+<title>Eder Salvador López Martínez | Finanzas & SAP</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
-body{margin:0;background:#0b0b0b;color:white;font-family:Arial;display:flex;justify-content:center;padding:20px}
-.app{width:380px;background:#111;border-radius:25px;padding:20px;box-shadow:0 0 30px #000}
-.header{display:flex;align-items:center;gap:10px}
-.header img{width:50px;height:50px;border-radius:50%}
-h2{margin:0}
-p{color:#aaa;margin:5px 0 15px}
-.days{display:flex;flex-wrap:wrap;gap:8px}
-.day{padding:8px 12px;border-radius:15px;background:#222;cursor:pointer}
-.day.active{background:#f5b400;color:black}
-.times{margin-top:15px;display:flex;flex-wrap:wrap;gap:8px}
-.time{padding:8px;border-radius:10px;background:#222;cursor:pointer}
-.time.disabled{background:#444;color:#888;pointer-events:none}
-.time.active{background:#ff3b3b}
-.form{display:none;margin-top:15px}
-input,select{width:100%;margin:5px 0;padding:10px;border-radius:8px;border:none;background:#222;color:white}
-button{width:100%;padding:12px;margin-top:10px;border:none;border-radius:10px;background:#1db954;color:white;cursor:pointer}
-.admin{margin-top:20px;background:#000;padding:10px;border-radius:10px}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+background:#081120;
+color:white;
+}
+
+header{
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:40px;
+background:linear-gradient(135deg,#0b1f3a,#1495d8);
+}
+
+.hero{
+max-width:1200px;
+width:100%;
+display:grid;
+grid-template-columns:300px 1fr;
+gap:50px;
+align-items:center;
+}
+
+.profile-pic{
+width:280px;
+height:280px;
+border-radius:50%;
+object-fit:cover;
+border:6px solid #38bdf8;
+box-shadow:0 0 30px rgba(56,189,248,.6);
+}
+
+.hero-content h1{
+font-size:4rem;
+line-height:1.1;
+}
+
+.hero-content h2{
+font-weight:400;
+margin-top:15px;
+color:#d6e8f5;
+}
+
+.menu{
+margin-top:35px;
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.menu a{
+padding:12px 25px;
+background:#1ba3ec;
+text-decoration:none;
+color:white;
+border-radius:12px;
+transition:.3s;
+}
+
+.menu a:hover{
+transform:translateY(-3px);
+}
+
+.section{
+max-width:1200px;
+margin:auto;
+padding:70px 20px;
+}
+
+.card{
+background:#13233d;
+padding:35px;
+border-radius:20px;
+margin-bottom:25px;
+}
+
+h3{
+font-size:2rem;
+margin-bottom:25px;
+color:#38bdf8;
+}
+
+.timeline{
+border-left:4px solid #38bdf8;
+padding-left:30px;
+}
+
+.job{
+margin-bottom:40px;
+}
+
+.job h4{
+font-size:1.4rem;
+margin-bottom:10px;
+}
+
+.job span{
+color:#38bdf8;
+}
+
+.job ul{
+margin-left:20px;
+}
+
+.job li{
+margin-bottom:8px;
+}
+
+.skills-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.skill{
+background:#1a2d4f;
+padding:20px;
+border-radius:15px;
+}
+
+.progress{
+height:10px;
+background:#0f172a;
+border-radius:30px;
+overflow:hidden;
+margin-top:10px;
+}
+
+.progress div{
+height:100%;
+background:#38bdf8;
+}
+
+.logros{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(350px,1fr));
+gap:20px;
+}
+
+.logro{
+background:#1a2d4f;
+padding:20px;
+border-radius:15px;
+}
+
+.contact{
+display:flex;
+flex-direction:column;
+gap:15px;
+font-size:1.1rem;
+}
+
+.linkedin-btn{
+display:inline-block;
+width:max-content;
+padding:14px 25px;
+background:#0ea5e9;
+color:white;
+text-decoration:none;
+border-radius:10px;
+font-weight:600;
+transition:.3s;
+}
+
+.linkedin-btn:hover{
+background:#38bdf8;
+transform:translateY(-3px);
+}
+
+footer{
+text-align:center;
+padding:30px;
+background:#06101d;
+}
+
+@media(max-width:900px){
+
+.hero{
+grid-template-columns:1fr;
+text-align:center;
+}
+
+.profile-pic{
+margin:auto;
+}
+
+.hero-content h1{
+font-size:2.5rem;
+}
+
+.menu{
+justify-content:center;
+}
+
+}
+
 </style>
-
-<!-- Firebase -->
-https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js"></script>
-
 </head>
+
 <body>
-<div class="app">
 
-  <div class="header">
-    <img src="https://i.imgur.com/6VBx3io.png">
-    <div>
-      <h2>Barber Shop</h2>
-      <p>Agenda tu cita</p>
-    </div>
-  </div>
+<header>
 
-  <div id="days" class="days"></div>
-  <div id="times" class="times"></div>
+<div class="hero">
 
-  <div class="form" id="form">
-    <input id="nombre" placeholder="Nombre">
-    <input id="telefono" placeholder="Teléfono">
-    <select id="servicio">
-      <option>Corte</option>
-      <option>Barba</option>
-      <option>Corte + Barba</option>
-    </select>
-    <button onclick="confirmar()">Confirmar Cita</button>
-  </div>
+<div>
+<img src="img/eder.jpg" class="profile-pic">
+</div>
 
-  <div class="admin">
-    <h3>Panel Admin</h3>
-    <div id="listaCitas"></div>
-  </div>
+<div class="hero-content">
+
+<h1>Eder Salvador López Martínez</h1>
+
+<h2>
+Administración y Finanzas |
+SAP |
+VBA |
+Power BI |
+Oracle Cloud
+</h2>
+
+<div class="menu">
+<a href="#perfil">Perfil</a>
+<a href="#experiencia">Experiencia</a>
+<a href="#habilidades">Habilidades</a>
+<a href="#logros">Logros</a>
+<a href="#contacto">Contacto</a>
+</div>
 
 </div>
 
-<script>
-// CONFIGURACION FIREBASE (REEMPLAZA)
-const firebaseConfig = {
-  apiKey: "TU_API_KEY",
-  authDomain: "TU_PROYECTO.firebaseapp.com",
-  databaseURL: "https://TU_PROYECTO.firebaseio.com",
-  projectId: "TU_PROYECTO",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: ""
-};
+</div>
 
-const app = firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+</header>
 
-const daysNames=["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes"];
-const today=new Date().getDay();
-const hours=[11,12,13,14,15,16,17,18,19,20,21];
+<section id="perfil" class="section">
 
-let selectedDay=null, selectedHour=null;
+<div class="card">
 
-const daysDiv=document.getElementById("days");
-const timesDiv=document.getElementById("times");
-const lista=document.getElementById("listaCitas");
+<h3>Perfil Ejecutivo</h3>
 
-// Mostrar días
-for(let i=today;i<=5;i++){
-  const btn=document.createElement("div");
-  const name=daysNames[i];
-  if(!name) continue;
-  btn.innerText=name;
-  btn.className="day";
-  btn.onclick=()=>selectDay(name,btn);
-  daysDiv.appendChild(btn);
-}
+<p style="font-size:1.1rem;line-height:2">
 
-function selectDay(day,el){
-  selectedDay=day;
-  document.querySelectorAll(".day").forEach(d=>d.classList.remove("active"));
-  el.classList.add("active");
+Profesional en Administración y Finanzas con más de 10 años de experiencia en tesorería, ingresos, conciliaciones, automatización de procesos y proyectos de onboarding.
 
-  db.ref("citas/"+day).on("value",snapshot=>{
-    const booked=snapshot.val()||{};
-    renderHours(booked);
-  });
-}
+Especialista en SAP, VBA, SAP GUI Scripting, Oracle Cloud, Power BI y análisis financiero.
 
-function renderHours(booked){
-  timesDiv.innerHTML="";
-  hours.forEach(h=>{
-    const t=document.createElement("div");
-    t.innerText=`${h}:00 - ${h+1}:00`;
-    t.className="time";
+Experiencia liderando proyectos de mejora continua, automatización y optimización de procesos financieros para múltiples unidades de negocio.
 
-    if(booked[h]){
-      t.classList.add("disabled");
-    }else{
-      t.onclick=()=>selectHour(h,t);
-    }
+</p>
 
-    timesDiv.appendChild(t);
-  });
-}
+</div>
 
-function selectHour(hour,el){
-  selectedHour=hour;
-  document.querySelectorAll(".time").forEach(t=>t.classList.remove("active"));
-  el.classList.add("active");
-  document.getElementById("form").style.display="block";
-}
+</section>
 
-function confirmar(){
-  const nombre=document.getElementById("nombre").value;
-  const telefono=document.getElementById("telefono").value;
-  const servicio=document.getElementById("servicio").value;
+<section id="experiencia" class="section">
 
-  if(!nombre||!telefono) return alert("Completa los datos");
+<div class="card">
 
-  db.ref("citas/"+selectedDay+"/"+selectedHour).set({nombre,telefono,servicio});
+<h3>Experiencia Profesional</h3>
 
-  const msg=`Cita Barber%0ADía: ${selectedDay}%0AHora: ${selectedHour}:00%0ANombre: ${nombre}`;
-  const numero="5218112345678";
-  window.open(`https://wa.me/${numero}?text=${msg}`);
-}
+<div class="timeline">
 
-// PANEL ADMIN
-db.ref("citas").on("value",snap=>{
-  const data=snap.val()||{};
-  lista.innerHTML="";
-  Object.keys(data).forEach(day=>{
-    Object.keys(data[day]).forEach(h=>{
-      const c=data[day][h];
-      lista.innerHTML+=`<p>${day} ${h}:00 - ${c.nombre}</p>`;
-    });
-  });
-});
-</script>
+<div class="job">
+<h4>XPERTAL <span>• Facilitador de Tesorería (Actual)</span></h4>
+
+<ul>
+<li>Flujos de efectivo y reportes financieros.</li>
+<li>Proyecto Kyriba y onboarding de pagos.</li>
+<li>Cargas de extractos bancarios.</li>
+<li>Movimientos de inversión.</li>
+<li>Automatización mediante VBA y SAP GUI Scripting.</li>
+</ul>
+</div>
+
+<div class="job">
+<h4>XPERTAL <span>• Facilitador de Ingresos (2018 - 2022)</span></h4>
+
+<ul>
+<li>Cuentas por cobrar.</li>
+<li>Aplicación de pagos.</li>
+<li>Complementos de pago.</li>
+<li>Carga de facturas.</li>
+<li>Reportes y análisis financiero.</li>
+</ul>
+</div>
+
+<div class="job">
+<h4>XPERTAL <span>• Analista de Conciliaciones (2017 - 2018)</span></h4>
+
+<ul>
+<li>Conciliaciones bancarias.</li>
+<li>Depuración de partidas.</li>
+<li>Auditorías.</li>
+<li>Reportes globales.</li>
+</ul>
+</div>
+
+<div class="job">
+<h4>Daltile México <span>• Encargado de Recibo (2013 - 2017)</span></h4>
+
+<ul>
+<li>Recepción de proveedores.</li>
+<li>Control de mercancías.</li>
+<li>Captura de órdenes de compra.</li>
+</ul>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="habilidades" class="section">
+
+<div class="card">
+
+<h3>Habilidades</h3>
+
+<div class="skills-grid">
+
+<div class="skill">
+SAP 90%
+<div class="progress"><div style="width:90%"></div></div>
+</div>
+
+<div class="skill">
+VBA 90%
+<div class="progress"><div style="width:90%"></div></div>
+</div>
+
+<div class="skill">
+Power BI 90%
+<div class="progress"><div style="width:90%"></div></div>
+</div>
+
+<div class="skill">
+Oracle Cloud 80%
+<div class="progress"><div style="width:80%"></div></div>
+</div>
+
+<div class="skill">
+Oracle R12 80%
+<div class="progress"><div style="width:80%"></div></div>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="logros" class="section">
+
+<div class="card">
+
+<h3>📊 Logros Clave</h3>
+
+<div class="logros">
+
+<div class="logro">Optimización de procesos de conciliación bancaria, reduciendo significativamente tiempos de cierre mensual.</div>
+
+<div class="logro">Estandarización de reportes financieros para múltiples unidades de negocio, mejorando visibilidad y toma de decisiones.</div>
+
+<div class="logro">Disminución de diferencias contables mediante cruces automatizados (Kyriba, SAP, Excel).</div>
+
+<div class="logro">Aseguramiento de integridad de datos en archivos masivos con validaciones automatizadas.</div>
+
+<div class="logro">Desarrollo de macros y automatizaciones que reducen procesos de horas a minutos y minimizan errores humanos.</div>
+
+<div class="logro">Generación automatizada de archivos financieros (MT940, TXT) para integración con sistemas internos.</div>
+
+<div class="logro">Automatización de envíos de reportes vía Outlook, mejorando eficiencia y trazabilidad.</div>
+
+<div class="logro">Desarrollo de dashboards en Power BI para análisis financiero y seguimiento de indicadores.</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="contacto" class="section">
+
+<div class="card">
+
+<h3>Contacto</h3>
+
+<div class="contact">
+
+<div>📧 Edersalvadorlm@gmail.com</div>
+
+<div>📱 52 8181799894</div>
+
+<div>📍 Santa Catarina, Nuevo León, México</div>
+
+<a
+href="https://www.linkedin.com/in/edersalvadorlm"
+target="_blank"
+class="linkedin-btn">
+
+Ver Perfil de LinkedIn
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<footer>
+
+© 2026 | Eder Salvador López Martínez
+
+</footer>
 
 </body>
 </html>
-
-
