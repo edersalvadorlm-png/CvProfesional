@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 
@@ -176,7 +177,6 @@ font-size:1.1rem;
 
 .linkedin-btn{
 display:inline-block;
-width:max-content;
 padding:14px 25px;
 background:#0ea5e9;
 color:white;
@@ -184,11 +184,53 @@ text-decoration:none;
 border-radius:10px;
 font-weight:600;
 transition:.3s;
+width:max-content;
 }
 
 .linkedin-btn:hover{
 background:#38bdf8;
 transform:translateY(-3px);
+}
+
+.whatsapp-btn{
+display:inline-block;
+padding:14px 25px;
+background:#25D366;
+color:white;
+text-decoration:none;
+border-radius:10px;
+font-weight:600;
+transition:.3s;
+width:max-content;
+}
+
+.whatsapp-btn:hover{
+transform:translateY(-3px);
+}
+
+.back-to-top{
+position:fixed;
+bottom:25px;
+right:25px;
+width:55px;
+height:55px;
+background:#0ea5e9;
+color:white;
+border-radius:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+text-decoration:none;
+font-size:24px;
+font-weight:bold;
+box-shadow:0 0 20px rgba(14,165,233,.5);
+transition:.3s;
+z-index:999;
+}
+
+.back-to-top:hover{
+transform:translateY(-5px);
+background:#38bdf8;
 }
 
 footer{
@@ -221,7 +263,7 @@ justify-content:center;
 </style>
 </head>
 
-<body>
+<body id="top">
 
 <header>
 
@@ -275,6 +317,36 @@ Experiencia liderando proyectos de mejora continua, automatización y optimizaci
 
 </div>
 
+<div class="card">
+
+<h3>Indicadores Profesionales</h3>
+
+<div class="skills-grid">
+
+<div class="skill">
+<h2>10+</h2>
+<p>Años de experiencia</p>
+</div>
+
+<div class="skill">
+<h2>50+</h2>
+<p>Automatizaciones desarrolladas</p>
+</div>
+
+<div class="skill">
+<h2>1000+</h2>
+<p>Horas ahorradas mediante VBA y SAP</p>
+</div>
+
+<div class="skill">
+<h2>SAP</h2>
+<p>Experiencia funcional y automatización</p>
+</div>
+
+</div>
+
+</div>
+
 </section>
 
 <section id="experiencia" class="section">
@@ -287,7 +359,6 @@ Experiencia liderando proyectos de mejora continua, automatización y optimizaci
 
 <div class="job">
 <h4>XPERTAL <span>• Facilitador de Tesorería (Actual)</span></h4>
-
 <ul>
 <li>Flujos de efectivo y reportes financieros.</li>
 <li>Proyecto Kyriba y onboarding de pagos.</li>
@@ -299,7 +370,6 @@ Experiencia liderando proyectos de mejora continua, automatización y optimizaci
 
 <div class="job">
 <h4>XPERTAL <span>• Facilitador de Ingresos (2018 - 2022)</span></h4>
-
 <ul>
 <li>Cuentas por cobrar.</li>
 <li>Aplicación de pagos.</li>
@@ -311,7 +381,6 @@ Experiencia liderando proyectos de mejora continua, automatización y optimizaci
 
 <div class="job">
 <h4>XPERTAL <span>• Analista de Conciliaciones (2017 - 2018)</span></h4>
-
 <ul>
 <li>Conciliaciones bancarias.</li>
 <li>Depuración de partidas.</li>
@@ -322,7 +391,6 @@ Experiencia liderando proyectos de mejora continua, automatización y optimizaci
 
 <div class="job">
 <h4>Daltile México <span>• Encargado de Recibo (2013 - 2017)</span></h4>
-
 <ul>
 <li>Recepción de proveedores.</li>
 <li>Control de mercancías.</li>
@@ -372,9 +440,7 @@ Oracle R12 80%
 </div>
 
 </div>
-
-</section>
-
+```html
 <section id="logros" class="section">
 
 <div class="card">
@@ -383,21 +449,83 @@ Oracle R12 80%
 
 <div class="logros">
 
-<div class="logro">Optimización de procesos de conciliación bancaria, reduciendo significativamente tiempos de cierre mensual.</div>
+<div class="logro">
+Optimización de procesos de conciliación bancaria, reduciendo significativamente tiempos de cierre mensual.
+</div>
 
-<div class="logro">Estandarización de reportes financieros para múltiples unidades de negocio, mejorando visibilidad y toma de decisiones.</div>
+<div class="logro">
+Estandarización de reportes financieros para múltiples unidades de negocio, mejorando visibilidad y toma de decisiones.
+</div>
 
-<div class="logro">Disminución de diferencias contables mediante cruces automatizados (Kyriba, SAP, Excel).</div>
+<div class="logro">
+Disminución de diferencias contables mediante cruces automatizados (Kyriba, SAP, Excel).
+</div>
 
-<div class="logro">Aseguramiento de integridad de datos en archivos masivos con validaciones automatizadas.</div>
+<div class="logro">
+Aseguramiento de integridad de datos en archivos masivos con validaciones automatizadas.
+</div>
 
-<div class="logro">Desarrollo de macros y automatizaciones que reducen procesos de horas a minutos y minimizan errores humanos.</div>
+<div class="logro">
+Desarrollo de macros y automatizaciones que reducen procesos de horas a minutos y minimizan errores humanos.
+</div>
 
-<div class="logro">Generación automatizada de archivos financieros (MT940, TXT) para integración con sistemas internos.</div>
+<div class="logro">
+Generación automatizada de archivos financieros (MT940, TXT) para integración con sistemas internos.
+</div>
 
-<div class="logro">Automatización de envíos de reportes vía Outlook, mejorando eficiencia y trazabilidad.</div>
+<div class="logro">
+Automatización de envíos de reportes vía Outlook, mejorando eficiencia y trazabilidad.
+</div>
 
-<div class="logro">Desarrollo de dashboards en Power BI para análisis financiero y seguimiento de indicadores.</div>
+<div class="logro">
+Desarrollo de dashboards en Power BI para análisis financiero y seguimiento de indicadores.
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="proyectos" class="section">
+
+<div class="card">
+
+<h3>🚀 Proyectos Destacados</h3>
+
+<div class="logros">
+
+<div class="logro">
+Automatización SAP GUI Scripting para extracción masiva de información financiera desde SAP hacia Excel.
+</div>
+
+<div class="logro">
+Desarrollo de macros VBA para generación de reportes financieros automatizados.
+</div>
+
+<div class="logro">
+Generación automática de archivos MT940 para integración bancaria.
+</div>
+
+<div class="logro">
+Automatización de envíos de reportes mediante Outlook y VBA.
+</div>
+
+<div class="logro">
+Dashboards Power BI para seguimiento financiero y KPIs.
+</div>
+
+<div class="logro">
+Validaciones masivas de información bancaria y conciliaciones mediante Excel.
+</div>
+
+<div class="logro">
+Automatización de procesos de tesorería y conciliaciones bancarias.
+</div>
+
+<div class="logro">
+Implementación de controles para disminuir errores operativos y mejorar productividad.
+</div>
 
 </div>
 
@@ -409,24 +537,67 @@ Oracle R12 80%
 
 <div class="card">
 
-<h3>Contacto</h3>
+<h3>📞 Contacto</h3>
 
 <div class="contact">
 
-<div>📧 Edersalvadorlm@gmail.com</div>
+<div>
+📧
+<a
+href="mailto:Edersalvadorlm@gmail.com"
+style="color:#38bdf8;text-decoration:none;">
 
-<div>📱 52 8181799894</div>
+Edersalvadorlm@gmail.com
 
-<div>📍 Santa Catarina, Nuevo León, México</div>
+</a>
+</div>
+
+<div>
+📱 +52 8181799894
+</div>
+
+<div>
+📍 Santa Catarina, Nuevo León, México
+</div>
+
+<br>
+
+<a
+href="https://wa.me/528181799894"
+target="_blank"
+class="whatsapp-btn">
+
+💬 Enviar WhatsApp
+
+</a>
+
+<br>
 
 <a
 href="https://www.linkedin.com/in/edersalvadorlm"
 target="_blank"
 class="linkedin-btn">
 
-Ver Perfil de LinkedIn
+🔗 Abrir Perfil de LinkedIn
 
 </a>
+
+<div style="margin-top:10px;">
+
+LinkedIn:
+
+<br>
+
+<a
+href="https://www.linkedin.com/in/edersalvadorlm"
+target="_blank"
+style="color:#38bdf8;word-break:break-all;">
+
+www.linkedin.com/in/edersalvadorlm
+
+</a>
+
+</div>
 
 </div>
 
@@ -436,9 +607,30 @@ Ver Perfil de LinkedIn
 
 <footer>
 
-© 2026 | Eder Salvador López Martínez
+<h3 style="margin-bottom:10px;">
+Eder Salvador López Martínez
+</h3>
+
+<p>
+Administración y Finanzas | SAP | VBA | Power BI | Oracle Cloud
+</p>
+
+<br>
+
+<p>
+© 2026 - Portafolio Profesional
+</p>
 
 </footer>
 
+<a href="#top" class="back-to-top">
+⬆
+</a>
+
 </body>
+
 </html>
+```
+
+</section>
+```
